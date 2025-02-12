@@ -19,6 +19,7 @@
                 </p>
 
                 <button class="btn btn-primary" (click)="showR(R)">Show Address</button>
+                <button class="btn btn-primary" [routerLink]="['/residences', R.id]">Details</button>
                 <button class="btn btn-outline-danger" (click)="toggleFavorite(R)">
                     ❤️ {{ isFavorite(R) ? 'Unlike' : 'Like' }}
                 </button>
