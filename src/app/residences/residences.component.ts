@@ -1,23 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Residence } from 'src/app/Core/Models/residence';
+import { ResidenceService } from '../Core/Services/residence.service';
 
 @Component({
   selector: 'app-residences',
   templateUrl: './residences.component.html',
   styleUrls: ['./residences.component.css']
 })
-export class ResidencesComponent {
-  listResidences: Residence[] = [
-    { id: 1, name: "El fel", address: "Borj Cedria", image: "../../assets/images/R1.jpg", status: "Disponible" },
-    { id: 2, name: "El yasmine", address: "Ezzahra", image: "../../assets/images/R2.jpg", status: "Disponible" },
-    { id: 3, name: "El Arij", address: "Rades", image: "../../assets/images/R3.jpg", status: "Vendu" },
-    { id: 4, name: "El Anber", address: "inconnu", image: "../../assets/images/R4.jpeg", status: "En Construction" }
-  ];
+export class ResidencesComponent implements OnInit{
 
-  filteredResidences: Residence[] = [...this.listResidences];
+  listResidences:Residence[]=[];
+  filteredResidences: Residence[] = [];
   selectedResidenceId: number | null = null;
   favoriteResidences: Residence[] = [];
   searchAddress: string = '';
+  constructor(private reservS:ResidenceService){}
+
+  ngOnInit() {
+    this.loadResidences();
+  }
+
+  loadResidences() {
+    this.reservS.getResidences().subscribe(residences => {
+      this.listResidences = residences;
+      this.filteredResidences = [...residences];
+    });
+  }
 
   showR(R: Residence) {
     if (R.address === "inconnu") {

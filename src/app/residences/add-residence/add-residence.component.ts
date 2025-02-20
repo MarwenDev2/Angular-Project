@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ResidenceService } from 'src/app/Core/Services/residence.service';
+import { Residence } from 'src/app/Core/Models/residence';
 
 @Component({
   selector: 'app-add-residence',
@@ -7,26 +9,37 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-residence.component.css']
 })
 export class AddResidenceComponent {
-
-  residence = {
+  residence: Residence = {
+    id: 0, // ID will be assigned by the server
     name: '',
     address: '',
     image: '',
     status: 'Disponible'
   };
+  imagePreview: string | null = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private residenceService: ResidenceService) {}
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = e.target?.result as string;
+        this.residence.image = this.imagePreview; // Store base64 string
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
   submitResidence() {
-    console.log('New Residence:', this.residence);
-    alert('Residence added successfully!');
-    
-    setTimeout(() => {
+    this.residenceService.addResidence(this.residence).subscribe(() => {
+      alert('Residence added successfully!');
       this.router.navigate(['/residences']);
-    }, 1000);
+    });
   }
 
   cancel() {
-    this.router.navigate(['/residences']); // Redirect to residences page
+    this.router.navigate(['/residences']);
   }
 }
