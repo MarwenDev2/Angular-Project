@@ -8,6 +8,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AddResidenceComponent } from './residences/add-residence/add-residence.component';
 import { ResidenceDetailsComponent } from './residences/residence-details/residence-details.component';
 import { ResidencesComponent } from './residences/residences.component';
+import { UpdateResidenceComponent } from './residences/update-residence/update-residence.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'residences', component: ResidencesComponent },
   { path: 'residences/:id', component: ResidenceDetailsComponent },
   { path: 'add-residence', component: AddResidenceComponent },
+  { path: 'update-residence/:id', component: UpdateResidenceComponent },
   { path: 'apartments', component: ApartmentsComponent },
   { path: 'apartments/:residenceId', component: ApartmentsByResidenceComponent },
   { path: 'add-apartment', component: AddApartmentComponent },

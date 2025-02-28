@@ -1,0 +1,49 @@
+<div class="form-container">
+  <h2>🏡 Update Residence</h2>
+
+  <form [formGroup]="residenceForm" (ngSubmit)="updateResidence()">
+    <!-- Name -->
+    <label for="name">Residence Name:</label>
+    <input type="text" id="name" formControlName="name" class="form-control" />
+    <div *ngIf="residenceForm.get('name')?.invalid && residenceForm.get('name')?.touched" class="error-message">
+      <div *ngIf="residenceForm.get('name')?.hasError('required')">Name is required.</div>
+      <div *ngIf="residenceForm.get('name')?.hasError('minlength')">Name must be at least 3 characters long.</div>
+      <div *ngIf="residenceForm.get('name')?.hasError('pattern')">Name must contain only letters and numbers.</div>
+    </div>
+
+    <!-- Address -->
+    <label for="address">Address:</label>
+    <input type="text" id="address" formControlName="address" class="form-control" />
+    <div *ngIf="residenceForm.get('address')?.invalid && residenceForm.get('address')?.touched" class="error-message">
+      <div *ngIf="residenceForm.get('address')?.hasError('required')">Address is required.</div>
+      <div *ngIf="residenceForm.get('address')?.hasError('minlength')">Address must be at least 5 characters long.</div>
+      <div *ngIf="residenceForm.get('address')?.hasError('pattern')">Address must contain only letters, numbers, and spaces.</div>
+    </div>
+
+    <!-- Image Upload -->
+    <label for="image">Upload Image:</label>
+    <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" class="form-control" />
+    <div *ngIf="residenceForm.get('image')?.invalid && residenceForm.get('image')?.touched" class="error-message">
+      Image is required.
+    </div>
+
+    <!-- Image Preview -->
+    <div *ngIf="imagePreview" class="image-preview mt-3">
+      <p>Image Preview:</p>
+      <img [src]="imagePreview" alt="Residence Image" class="preview-img" />
+    </div>
+
+    <!-- Status -->
+    <label for="status">Status:</label>
+    <select id="status" formControlName="status" class="form-control">
+      <option value="Disponible">Disponible</option>
+      <option value="En Construction">En Construction</option>
+      <option value="Vendu">Vendu</option>
+    </select>
+
+    <div class="buttons mt-4">
+      <button type="submit" class="btn btn-primary" [disabled]="residenceForm.invalid">Update Residence</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

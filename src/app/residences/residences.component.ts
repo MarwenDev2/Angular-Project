@@ -54,4 +54,22 @@ export class ResidencesComponent implements OnInit{
       residence.address.toLowerCase().includes(search) || residence.name.toLowerCase().includes(search)
     );
   }
+
+  deleteResidence(id: number) {
+    console.log('Deleting Residence with ID:', id); // ✅ Log the ID
+  
+    if (confirm('Are you sure you want to delete this residence?')) {
+      this.reservS.deleteResidence(id).subscribe({
+        next: () => {
+          alert('Residence deleted successfully');
+          this.loadResidences(); // Refresh list
+        },
+        error: (err) => {
+          console.error('Delete failed:', err);
+          alert('Failed to delete residence. Check the console for more details.');
+        }
+      });
+    }
+  }
+  
 }

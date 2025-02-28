@@ -1,8 +1,39 @@
 {
   "residences": [
-    { "id": 1, "name": "El Fel", "address": "Borj Cedria", "image": "assets/images/R1.jpg", "status": "Disponible" },
-    { "id": 2, "name": "El Yasmine", "address": "Ezzahra", "image": "assets/images/R2.jpg", "status": "Disponible" },
-    { "id": 3, "name": "El Arij", "address": "Rades", "image": "assets/images/R3.jpg", "status": "Vendu" },
-    { "id": 4, "name": "El Anber", "address": "Inconnu", "image": "assets/images/R4.jpeg", "status": "En Construction" }
+    {
+      "id": "1",
+      "name": "El Fel",
+      "address": "Borj Cedria",
+      "image": "assets/images/R1.jpg",
+      "status": "Disponible"
+    },
+    {
+      "id": "2",
+      "name": "El Yasmine",
+      "address": "Ezzahra",
+      "image": "assets/images/R2.jpg",
+      "status": "Disponible"
+    },
+    {
+      "id": "3",
+      "name": "El Arij",
+      "address": "Rades",
+      "image": "assets/images/R3.jpg",
+      "status": "Vendu"
+    },
+    {
+      "id": "4",
+      "name": "El Anber",
+      "address": "Inconnu",
+      "image": "assets/images/R4.jpeg",
+      "status": "En Construction"
+    },
+    {
+      "id": "5",
+      "name": "Salle des fetes jallouli",
+      "address": "Sidi mansour klm 9",
+      "image": "/assets/images/1740778912685-[Witanime.com] OP EP 1076 FHD.mp4 9_22_2023 10_44_49 PM.png",
+      "status": "Disponible"
+    }
   ]
 }

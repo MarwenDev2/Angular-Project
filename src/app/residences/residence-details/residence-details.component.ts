@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Residence } from 'src/app/Core/Models/residence';
+import { ResidenceService } from 'src/app/Core/Services/residence.service';
 
 @Component({
   selector: 'app-residence-details',
@@ -10,40 +11,47 @@ import { Residence } from 'src/app/Core/Models/residence';
 export class ResidenceDetailsComponent implements OnInit {
   residenceId!: number;
   residence: Residence | undefined;
+  totalResidences: number = 0; // To track the total number of residences
 
-  listResidences: Residence[] = [
-    { id: 1, name: "El fel", address: "Borj Cedria", image: "../../assets/images/R1.jpg", status: "Disponible" },
-    { id: 2, name: "El yasmine", address: "Ezzahra", image: "../../assets/images/R2.jpg", status: "Disponible" },
-    { id: 3, name: "El Arij", address: "Rades", image: "../../assets/images/R3.jpg", status: "Vendu" },
-    { id: 4, name: "El Anber", address: "inconnu", image: "../../assets/images/R4.jpeg", status: "En Construction" }
-  ];
-
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private residenceService: ResidenceService
+  ) {}
 
   ngOnInit(): void {
+    // Get residence ID from route params
     this.route.params.subscribe((params) => {
-      this.residenceId = +params['id']; // Get residenceId from route params
-      this.residence = this.listResidences.find(res => res.id === this.residenceId); // Find the residence by id
+      this.residenceId = +params['id'];
+      this.fetchResidenceById(this.residenceId);
+    });
 
-      if (!this.residence) {
-        this.router.navigate(['/residences']); // Navigate to list if residence not found
+    // Fetch all residences to track navigation
+    this.residenceService.getResidences().subscribe(residences => {
+      this.totalResidences = residences.length;
+    });
+  }
+
+  // ✅ Fetch the residence from JSON Server
+  fetchResidenceById(id: number) {
+    this.residenceService.getResidenceById(id).subscribe({
+      next: (residence) => {
+        this.residence = residence;
+      },
+      error: () => {
+        alert('Residence not found!');
+        this.router.navigate(['/residences']);
       }
     });
   }
 
+  // ✅ Navigate to the next residence (loops back to the first)
   goToNextResidence() {
-    const nextResidenceId = this.residenceId + 1;
-    const nextResidence = this.listResidences.find(res => res.id === nextResidenceId);
-    
-    if (nextResidence) {
-      this.router.navigate(['/residences', nextResidenceId]);
-    } else {
-      // If no next residence exists, loop back to the first residence
-      this.router.navigate(['/residences', 1]);
-    }
+    const nextResidenceId = this.residenceId < this.totalResidences ? this.residenceId + 1 : 1;
+    this.router.navigate(['/residences', nextResidenceId]);
   }
 
-  // Navigate to Apartments by Residence
+  // ✅ Navigate to apartments by residence
   viewApartmentsByResidence() {
     this.router.navigate(['/apartments', this.residenceId]);
   }
